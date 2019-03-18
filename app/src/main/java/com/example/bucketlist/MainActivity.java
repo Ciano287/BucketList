@@ -1,12 +1,13 @@
 package com.example.bucketlist;
 
+import android.*;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -17,7 +18,11 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.CheckBox;
+import android.widget.EditText;
+
+import com.example.bucketlist.BucketListRoomDatabase;
+import com.example.bucketlist.R;
+import com.example.bucketlist.BucketList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private BucketListAdapter mAdapter;
     private RecyclerView mRecyclerView;
     private GestureDetector mGestureDetector;
-    private CheckBox checkBox;
+    private LinearLayoutManager linearLayoutManager;
 
     private BucketListRoomDatabase db;
     private Executor executor = Executors.newSingleThreadExecutor();
@@ -39,17 +44,17 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mRecyclerView = findViewById(R.id.rvBucketList);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         db = BucketListRoomDatabase.getDatabase(this);
+        mBucketList = new ArrayList<>();
+        mAdapter = new BucketListAdapter(mBucketList);
 
-        mBucketList = new ArrayList<BucketList>();
-        mRecyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL));
-        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        checkBox = findViewById(R.id.checkBox);
+        mRecyclerView = findViewById(R.id.rvBucketList);
+        mRecyclerView.setAdapter(mAdapter);
+        linearLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
+        mRecyclerView.setLayoutManager(linearLayoutManager);
 
         mGestureDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
             @Override
@@ -116,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_bucket_list, menu);
+        getMenuInflater().inflate(R.menu.menu_shopping_list, menu);
         return true;
     }
 
@@ -151,6 +156,7 @@ public class MainActivity extends AppCompatActivity {
                 String description = data.getStringExtra(BucketListCreate.nDescription);
                 BucketList bucketList = new BucketList(title, description);
                 insertBucketList(bucketList);
+                mRecyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL));
                 updateUI();
             }
         }
@@ -195,10 +201,10 @@ public class MainActivity extends AppCompatActivity {
         if (mAdapter == null) {
             mAdapter = new BucketListAdapter(mBucketList);
             mRecyclerView.setAdapter(mAdapter);
-
-        } else {
-            mAdapter.swapList(mBucketList);
         }
+//        } else {
+//            mAdapter.swapList(mBucketList);
+//        }
     }
 
 

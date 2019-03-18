@@ -1,7 +1,6 @@
 package com.example.bucketlist;
 
 import android.content.Context;
-import android.graphics.Paint;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,10 +9,11 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BucketListAdapter extends RecyclerView.Adapter<BucketListAdapter.ViewHolder> {
-    List<BucketList> bucketLists;
+    private List<BucketList> bucketLists;
 //    CheckBox checkBox;
 
     public BucketListAdapter(List<BucketList> bucketLists){
@@ -24,17 +24,19 @@ public class BucketListAdapter extends RecyclerView.Adapter<BucketListAdapter.Vi
     public BucketListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         Context context = viewGroup.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(android.R.layout.simple_list_item_1, null);
+        View view = inflater.inflate(android.R.layout.simple_list_item_1, viewGroup,false);
         // Return a new holder instance
-        BucketListAdapter.ViewHolder viewHolder = new BucketListAdapter.ViewHolder(view);
-        return viewHolder;
+
+        return new BucketListAdapter.ViewHolder(view);
+
     }
 
     @Override
     public void onBindViewHolder(@NonNull final BucketListAdapter.ViewHolder viewHolder, int i) {
-        BucketList bucketList = bucketLists.get(i);
-        viewHolder.textView.setText(bucketList.getDescription());
-        viewHolder.textView2.setText(bucketList.getTitle());
+
+        viewHolder.textView.setText(bucketLists.get(viewHolder.getAdapterPosition()).getTitle());
+        viewHolder.textView.setText(bucketLists.get(viewHolder.getAdapterPosition()).getDescription());
+    }
 //        viewHolder.setItemClickListener(new ItemClickListener() {
 //            @Override
 //            public void onItemClick(View v, int pos) {
@@ -46,7 +48,7 @@ public class BucketListAdapter extends RecyclerView.Adapter<BucketListAdapter.Vi
 //                } else if (!checkBox.isChecked()){
 //                    viewHolder.tvTitle.setPaintFlags(viewHolder.tvTitle.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 //                }
-             }
+
 
 
 
@@ -55,21 +57,19 @@ public class BucketListAdapter extends RecyclerView.Adapter<BucketListAdapter.Vi
         return bucketLists.size();
     }
 
-    public void swapList (List<BucketList> newList) {
-        bucketLists = newList;
-        if (newList != null) {
-            // Force the RecyclerView to refresh
-            this.notifyDataSetChanged();
-        }
-    }
+//    public void swapList (List<BucketList> newList) {
+//        bucketLists = newList;
+//        if (newList != null) {
+//            // Force the RecyclerView to refresh
+//            this.notifyDataSetChanged();
+//        }
+//    }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        public TextView tvTitle;
+
         TextView textView;
         TextView textView2;
-        CheckBox checkBox;
-
 
 
         public ViewHolder(View itemView) {
@@ -78,8 +78,8 @@ public class BucketListAdapter extends RecyclerView.Adapter<BucketListAdapter.Vi
 
             textView = itemView.findViewById(android.R.id.text1);
             textView2 = itemView.findViewById(android.R.id.text2);
-            checkBox = itemView.findViewById(android.R.id.checkbox);
-
+        }
+    }
 //            checkBox.setOnClickListener(this);
 //        }
 //
@@ -93,7 +93,7 @@ public class BucketListAdapter extends RecyclerView.Adapter<BucketListAdapter.Vi
 //        }
 //    }
 
-        }
+
 
     }
-}
+
