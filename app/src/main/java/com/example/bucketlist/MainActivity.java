@@ -1,29 +1,21 @@
 package com.example.bucketlist;
 
-import android.*;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.EditText;
-
-import com.example.bucketlist.BucketListRoomDatabase;
-import com.example.bucketlist.R;
-import com.example.bucketlist.BucketList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -156,8 +148,8 @@ public class MainActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (requestCode == REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
-                String title = data.getStringExtra(BucketListCreate.nTitle);
-                String description = data.getStringExtra(BucketListCreate.nDescription);
+                String title = data.getStringExtra(BucketListCreate.EXTRA_TITLE);
+                String description = data.getStringExtra(BucketListCreate.EXTRA_DESCRIPTION);
                 BucketList bucketList = new BucketList(title, description);
                 insertBucketList(bucketList);
                 updateUI();
@@ -221,15 +213,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void updateBucketList(final BucketList bucketList) {
-        executor.execute(new Runnable() {
-            @Override
-            public void run() {
-                db.bucketListDao().updateBucketList(bucketList);
-                getAllBucketLists(); // Because the Room database has been modified we need to get the new list of reminders.
-            }
-        });
-    }
+
 
     private void deleteBucketList(final BucketList bucketList) {
         executor.execute(new Runnable() {

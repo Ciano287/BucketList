@@ -12,8 +12,8 @@ public class BucketListCreate extends AppCompatActivity {
     EditText inputDescription;
     Button addButton;
     Intent intent;
-    static String nTitle = "aa";
-    static String nDescription = "bb";
+     static final String EXTRA_TITLE = "com.example.bucketlist.EXTRA_TITLE";
+     static final String EXTRA_DESCRIPTION = "com.example.bucketlist.EXTRA_DESCRIPTION";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,8 +29,8 @@ public class BucketListCreate extends AppCompatActivity {
                 intent = new Intent(BucketListCreate.this, MainActivity.class);
                 String title = inputTitle.getText().toString();
                 String description = inputDescription.getText().toString();
-                intent.putExtra(nTitle,title);
-                intent.putExtra(nDescription,description);
+                intent.putExtra(EXTRA_TITLE,title);
+                intent.putExtra(EXTRA_DESCRIPTION,description);
                 setResult(RESULT_OK,intent);
                 finish();
             }

@@ -30,17 +30,11 @@ public class BucketList {
         return title;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
 
     public String getDescription() {
         return description;
     }
 
-    public void setDescription(String description) {
-        description = description;
-    }
 
     @Override
     public String toString() {

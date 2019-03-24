@@ -10,23 +10,23 @@ import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
-import java.util.ArrayList;
+
 import java.util.List;
 
 public class BucketListAdapter extends RecyclerView.Adapter<BucketListAdapter.ViewHolder> {
     private List<BucketList> bucketLists;
-//    CheckBox checkBox;
 
-    public BucketListAdapter(List<BucketList> bucketLists){
+    public BucketListAdapter(List<BucketList> bucketLists) {
         this.bucketLists = bucketLists;
     }
+
     @NonNull
     @Override
     public BucketListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         Context context = viewGroup.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.bucket_item_layout
-                , viewGroup,false);
+                , viewGroup, false);
 
 
         // Return a new holder instance
@@ -45,7 +45,7 @@ public class BucketListAdapter extends RecyclerView.Adapter<BucketListAdapter.Vi
         viewHolder.checkBox.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(viewHolder.checkBox.isChecked()){
+                if (viewHolder.checkBox.isChecked()) {
                     viewHolder.textViewTitle.setPaintFlags(viewHolder.textViewTitle.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                     viewHolder.textViewDescription.setPaintFlags(viewHolder.textViewDescription.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
                 } else {
@@ -56,19 +56,6 @@ public class BucketListAdapter extends RecyclerView.Adapter<BucketListAdapter.Vi
         });
 
     }
-//        viewHolder.setItemClickListener(new ItemClickListener() {
-//            @Override
-//            public void onItemClick(View v, int pos) {
-//                checkBox = (CheckBox) v;
-//
-//                if (checkBox.isChecked()){
-//                    viewHolder.tvTitle.setPaintFlags(viewHolder.tvTitle.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-//
-//                } else if (!checkBox.isChecked()){
-//                   viewHolder.tvTitle.setPaintFlags(viewHolder.tvTitle.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-//               }
-
-
 
 
     @Override
@@ -76,7 +63,7 @@ public class BucketListAdapter extends RecyclerView.Adapter<BucketListAdapter.Vi
         return bucketLists.size();
     }
 
-    public void swapList (List<BucketList> newList) {
+    public void swapList(List<BucketList> newList) {
         bucketLists = newList;
         if (newList != null) {
             // Force the RecyclerView to refresh
@@ -90,7 +77,7 @@ public class BucketListAdapter extends RecyclerView.Adapter<BucketListAdapter.Vi
         TextView textViewTitle;
         TextView textViewDescription;
         CheckBox checkBox;
-        
+
 
         public ViewHolder(View itemView) {
 
@@ -103,20 +90,5 @@ public class BucketListAdapter extends RecyclerView.Adapter<BucketListAdapter.Vi
 
         }
     }
-//            checkBox.setOnClickListener(this);
-//        }
-//
-//        public void setItemClickListener(ItemClickListener ic){
-//            this.itemClickListener = ic;
-//        }
-//
-//        @Override
-//        public void onClick(View v) {
-//            this.itemClickListener.onItemClick(v,getLayoutPosition());
-//        }
-//    }
-
-
-
-    }
+}
 
