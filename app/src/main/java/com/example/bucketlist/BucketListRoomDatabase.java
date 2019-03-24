@@ -21,6 +21,7 @@ public abstract class BucketListRoomDatabase extends RoomDatabase {
                     // Create database here
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             BucketListRoomDatabase.class, NAME_DATABASE)
+                            .allowMainThreadQueries()
                             .build();
                 }
             }

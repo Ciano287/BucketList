@@ -10,10 +10,13 @@
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvBucketList"
-        android:layout_width="354dp"
-        android:layout_height="608dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="334dp"
+        android:layout_height="544dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="40dp"
         app:layoutManager="android.support.v7.widget.LinearLayoutManager"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:listitem="@layout/bucket_item_layout"
+        />
 </android.support.constraint.ConstraintLayout>

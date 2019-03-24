@@ -1,6 +1,7 @@
 package com.example.bucketlist;
 
 import android.content.Context;
+import android.graphics.Paint;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -24,7 +25,10 @@ public class BucketListAdapter extends RecyclerView.Adapter<BucketListAdapter.Vi
     public BucketListAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
         Context context = viewGroup.getContext();
         LayoutInflater inflater = LayoutInflater.from(context);
-        View view = inflater.inflate(android.R.layout.simple_list_item_1, viewGroup,false);
+        View view = inflater.inflate(R.layout.bucket_item_layout
+                , viewGroup,false);
+
+
         // Return a new holder instance
 
         return new BucketListAdapter.ViewHolder(view);
@@ -33,9 +37,24 @@ public class BucketListAdapter extends RecyclerView.Adapter<BucketListAdapter.Vi
 
     @Override
     public void onBindViewHolder(@NonNull final BucketListAdapter.ViewHolder viewHolder, int i) {
+        final BucketList bucketList = bucketLists.get(i);
 
-        viewHolder.textView.setText(bucketLists.get(viewHolder.getAdapterPosition()).getTitle());
-        viewHolder.textView.setText(bucketLists.get(viewHolder.getAdapterPosition()).getDescription());
+        viewHolder.textViewTitle.setText(bucketList.getTitle());
+        viewHolder.textViewDescription.setText(bucketList.getDescription());
+
+        viewHolder.checkBox.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(viewHolder.checkBox.isChecked()){
+                    viewHolder.textViewTitle.setPaintFlags(viewHolder.textViewTitle.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                    viewHolder.textViewDescription.setPaintFlags(viewHolder.textViewDescription.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+                } else {
+                    viewHolder.textViewTitle.setPaintFlags(viewHolder.textViewTitle.getPaintFlags() & ~Paint.STRIKE_THRU_TEXT_FLAG);
+                    viewHolder.textViewDescription.setPaintFlags(viewHolder.textViewDescription.getPaintFlags() & ~Paint.STRIKE_THRU_TEXT_FLAG);
+                }
+            }
+        });
+
     }
 //        viewHolder.setItemClickListener(new ItemClickListener() {
 //            @Override
@@ -46,8 +65,8 @@ public class BucketListAdapter extends RecyclerView.Adapter<BucketListAdapter.Vi
 //                    viewHolder.tvTitle.setPaintFlags(viewHolder.tvTitle.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
 //
 //                } else if (!checkBox.isChecked()){
-//                    viewHolder.tvTitle.setPaintFlags(viewHolder.tvTitle.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
-//                }
+//                   viewHolder.tvTitle.setPaintFlags(viewHolder.tvTitle.getPaintFlags() | Paint.STRIKE_THRU_TEXT_FLAG);
+//               }
 
 
 
@@ -57,27 +76,31 @@ public class BucketListAdapter extends RecyclerView.Adapter<BucketListAdapter.Vi
         return bucketLists.size();
     }
 
-//    public void swapList (List<BucketList> newList) {
-//        bucketLists = newList;
-//        if (newList != null) {
-//            // Force the RecyclerView to refresh
-//            this.notifyDataSetChanged();
-//        }
-//    }
+    public void swapList (List<BucketList> newList) {
+        bucketLists = newList;
+        if (newList != null) {
+            // Force the RecyclerView to refresh
+            this.notifyDataSetChanged();
+        }
+    }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
 
-        TextView textView;
-        TextView textView2;
-
+        TextView textViewTitle;
+        TextView textViewDescription;
+        CheckBox checkBox;
+        
 
         public ViewHolder(View itemView) {
 
             super(itemView);
 
-            textView = itemView.findViewById(android.R.id.text1);
-            textView2 = itemView.findViewById(android.R.id.text2);
+            textViewTitle = itemView.findViewById(R.id.TextLayoutTitle);
+            textViewDescription = itemView.findViewById(R.id.TextLayoutDescription);
+            checkBox = itemView.findViewById(R.id.checkBox);
+
+
         }
     }
 //            checkBox.setOnClickListener(this);

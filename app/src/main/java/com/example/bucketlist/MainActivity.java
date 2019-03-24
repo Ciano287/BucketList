@@ -13,6 +13,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
@@ -47,14 +48,17 @@ public class MainActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        db = BucketListRoomDatabase.getDatabase(this);
+        db = BucketListRoomDatabase.getDatabase(MainActivity.this);
         mBucketList = new ArrayList<>();
         mAdapter = new BucketListAdapter(mBucketList);
 
         mRecyclerView = findViewById(R.id.rvBucketList);
         mRecyclerView.setAdapter(mAdapter);
+//        mRecyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL));
         linearLayoutManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
         mRecyclerView.setLayoutManager(linearLayoutManager);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(this, linearLayoutManager.getOrientation());
+        mRecyclerView.addItemDecoration(dividerItemDecoration);
 
         mGestureDetector = new GestureDetector(this, new GestureDetector.SimpleOnGestureListener() {
             @Override
@@ -156,7 +160,6 @@ public class MainActivity extends AppCompatActivity {
                 String description = data.getStringExtra(BucketListCreate.nDescription);
                 BucketList bucketList = new BucketList(title, description);
                 insertBucketList(bucketList);
-                mRecyclerView.addItemDecoration(new DividerItemDecoration(getApplicationContext(), DividerItemDecoration.VERTICAL));
                 updateUI();
             }
         }
@@ -202,10 +205,10 @@ public class MainActivity extends AppCompatActivity {
             mAdapter = new BucketListAdapter(mBucketList);
             mRecyclerView.setAdapter(mAdapter);
         }
-//        } else {
-//            mAdapter.swapList(mBucketList);
-//        }
-    }
+         else {
+            mAdapter.swapList(mBucketList);
+        }}
+
 
 
     private void insertBucketList(final BucketList bucketList) {

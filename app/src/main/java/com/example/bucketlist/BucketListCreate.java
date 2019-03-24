@@ -12,8 +12,8 @@ public class BucketListCreate extends AppCompatActivity {
     EditText inputDescription;
     Button addButton;
     Intent intent;
-    static String nTitle;
-    static String nDescription;
+    static String nTitle = "aa";
+    static String nDescription = "bb";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
